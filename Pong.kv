@@ -1,0 +1,33 @@
+#:kivy 1.0.9
+
+
+<Fly>:
+    canvas:
+        Color:
+            rgba: 1, 0, 0, 1
+        Rectangle:
+            size: 3, 10
+            pos: self.pos
+            size: self.size
+            Label:
+                size: root.size
+                text: root.angle
+                Color:
+                    rgba: 1, 1, 1, 1
+            Rotate:
+                angle: self.angle
+                origin: self.center
+
+
+<FlyGame>:
+    fly: Fly_critter
+
+    canvas:
+        Rectangle:
+            pos: 0, 0
+            size: self.width, self.height
+            source: "resources/bg1.jpg"
+
+    Fly:
+        id: Fly_critter
+        center: self.parent.center
