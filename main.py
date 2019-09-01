@@ -1,59 +1,53 @@
+from kivy.animation import Animation
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.uix.button import Button
 from kivy.properties import (
-    NumericProperty, ReferenceListProperty, ObjectProperty
+    NumericProperty, ReferenceListProperty, ObjectProperty, ListProperty
 )
 from kivy.vector import Vector
 from kivy.clock import Clock
 from random import randint
-import numpy as np
 
-class Fly(Widget):
-
-
+class Fly_b(Widget):
     def __init__(self, **kwargs):
-        super(Fly, self).__init__(**kwargs)
         self.velocity_x = NumericProperty(0)
         self.velocity_y = NumericProperty(0)
-        self.angle = NumericProperty(0)
+        self.angle_prop = randint(0, 360)
         self.velocity = ReferenceListProperty(self.velocity_x, self.velocity_y)
-        self.btn1 = Button(text='Hello World 1', font_size="15sp",
-                      background_color=(1, 1, 1, 1),
-                      color=(1, 1, 1, 1),
-                        pos = (self.x, self.y))
-        self.btn1.bind(on_press = self.callback)
-        self.add_widget(self.btn1)
+        self.angle = self.angle_prop
+        super(Fly_b, self).__init__(**kwargs)
 
+        
     def move(self):
         self.pos = Vector(*self.velocity) + self.pos
-        self.angle = Vector(*self.velocity).angle((0, 180))
+        self.angle = Vector(*self.velocity).angle((1, 0))
         # print("POS: {}".format(self.pos))
         # print("VEL: {}".format(self.velocity))
         # print("ANGLE: {}".format(self.angle))
-        self.btn1.text = "{:.0f}".format(self.angle)
+        # self.btn1.text = "{:.0f}".format(self.angle)
 
     def callback(self, instance):
+        # print("click")
         self.velocity = Vector(4, 0).rotate(randint(0, 360))
 
 class FlyGame(Widget):
-    fly = ObjectProperty(None)
+    fly_b = ObjectProperty(None)
 
     def start_fly(self):
-        self.fly.center = self.center
-        self.fly.velocity = Vector(4, 0).rotate(randint(0, 360))
+        self.fly_b.center = self.center
+        self.fly_b.velocity = Vector(4, 0).rotate(randint(0, 360))
 
     def update(self, dt):
-        self.fly.move()
+        self.fly_b.move()
 
         # bounce off top and bottom
-        if (self.fly.y < 0) or (self.fly.top > self.height):
-            self.fly.velocity.y *= -1
-
+        if (self.fly_b.btn.y < 0) or (self.fly_b.btn.top > self.height):
+            self.fly_b.velocity.y *= -1
         # bounce off left and right
-        if (self.fly.x < 0) or (self.fly.right > self.width):
-            self.fly.velocity.x *= -1
+        if (self.fly_b.btn.x < 0) or (self.fly_b.btn.right > self.width):
+            self.fly_b.velocity.x *= -1
 
+        self.fly_b.btn.text = "{:.0f}".format(self.fly_b.angle)
 
 class PongApp(App):
     def build(self):

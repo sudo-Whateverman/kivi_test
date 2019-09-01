@@ -1,33 +1,38 @@
 #:kivy 1.0.9
 
 
-<Fly>:
-    canvas:
-        Color:
-            rgba: 1, 0, 0, 1
-        Rectangle:
-            size: 3, 10
-            pos: self.pos
-            size: self.size
-            Label:
-                size: root.size
-                text: root.angle
-                Color:
-                    rgba: 1, 1, 1, 1
+<Fly_b>:
+    btn: button_widget
+    koi: koi_draw
+    Button:
+        id: button_widget
+        text: str(self.parent.angle_prop)
+        size_hint: .20, .20
+        pos: self.parent.pos
+        on_press: root.callback(root)
+        background_color: 0, 0, 0, 0
+        canvas.before:
+            PushMatrix
             Rotate:
-                angle: self.angle
+                angle: self.parent.angle
+                axis: (0, 0, 1)
                 origin: self.center
-
+        canvas.after:
+            PopMatrix
+        Image:
+            id: koi_draw
+            pos: self.parent.pos
+            source: "resources/koi.png"
+            angle: root.angle
 
 <FlyGame>:
-    fly: Fly_critter
-
-    canvas:
-        Rectangle:
-            pos: 0, 0
-            size: self.width, self.height
-            source: "resources/bg1.jpg"
-
-    Fly:
-        id: Fly_critter
-        center: self.parent.center
+    fly_b: Fly_button
+    FloatLayout:
+        size: self.parent.width, self.parent.height
+        canvas:
+            Rectangle:
+                pos: 0, 0
+                size: self.width, self.height
+                source: "resources/bg1.jpg"
+        Fly_b:
+            id: Fly_button
