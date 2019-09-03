@@ -7,8 +7,8 @@
     Button:
         id: button_widget
         text: str(self.parent.angle_prop)
-        size_hint: .20, .20
         pos: self.parent.pos
+        size: 300,300
         on_press: root.callback(root)
         background_color: 0, 0, 0, 0
         canvas.before:
@@ -22,6 +22,8 @@
         Image:
             id: koi_draw
             pos: self.parent.pos
+            size: 300, 300
+            allow_stretch: True
             source: "resources/koi.png"
             angle: root.angle
 

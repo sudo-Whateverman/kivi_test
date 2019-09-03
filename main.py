@@ -28,17 +28,18 @@ class Fly_b(Widget):
 
     def callback(self, instance):
         # print("click")
-        self.velocity = Vector(4, 0).rotate(randint(0, 360))
+        self.velocity = Vector(20, 0).rotate(randint(0, 360))
 
 class FlyGame(Widget):
     fly_b = ObjectProperty(None)
 
     def start_fly(self):
         self.fly_b.center = self.center
-        self.fly_b.velocity = Vector(4, 0).rotate(randint(0, 360))
+        self.fly_b.velocity = Vector(20, 0).rotate(randint(0, 360))
 
     def update(self, dt):
         self.fly_b.move()
+
 
         # bounce off top and bottom
         if (self.fly_b.btn.y < 0) or (self.fly_b.btn.top > self.height):

@@ -1,0 +1,3 @@
+title=CatsPong
+author=Nick
+orientation=portrait
